@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Google Maps API</title>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_Sx-1mti2WrbbN6q9-kPdUfdf4Qf4FLY&callback=initMap"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+</head>
+
+<body>
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box" />
+
+
+    <div id="map" style="width: 100%; height: 600px;"></div>
+    <script>
+        function initMap() {
+            const mapOptions = {
+                center: { lat: 21.027763, lng: 105.834160 },
+                zoom: 10,
+            };
+            const mapDiv = document.getElementById('map');
+            return new google.maps.Map(mapDiv, mapOptions);
+        }
+    </script>
+
+</body>
+
+</html>
