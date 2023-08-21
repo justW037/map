@@ -1,95 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Maps API</title>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc7PnOq3Hxzq6dxeUVaY8WGLHIePl0swY&callback=initMap&libraries=places"></script>
+
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
 </head>
 
+
 <body>
+
     <input id="pac-input" class="controls" type="text" placeholder="Search Box" />
+    <div id="container">
+        <div id="map"></div>
+        <div id="sidebar">
+            <h2>Results</h2>
+            <ul id="places"></ul>
+        </div>
+    </div>
+    <script src="index.js"></script>
 
-
-    <div id="map" style="width: 100%; height: 600px;"></div>
-    <script>
-        function initMap() {
-            const myLatLng = { lat: 21.027763, lng: 105.834160 };
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 10,
-                center: myLatLng,
-            });
-
-            new google.maps.Marker({
-                position: myLatLng,
-                map,
-                title: "Hello World!",
-            });
-
-            const input = document.getElementById("pac-input");
-            const searchBox = new google.maps.places.SearchBox(input);
-
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-            map.addListener("bounds_changed", () => {
-                searchBox.setBounds(map.getBounds());
-            });
-
-            let markers = [];
-
-
-            searchBox.addListener("places_changed", () => {
-                const places = searchBox.getPlaces();
-
-                if (places.length == 0) {
-                    return;
-                }
-
-                markers.forEach((marker) => {
-                    marker.setMap(null);
-                });
-                markers = [];
-
-
-                const bounds = new google.maps.LatLngBounds();
-
-                places.forEach((place) => {
-                    if (!place.geometry || !place.geometry.location) {
-                        console.log("Returned place contains no geometry");
-                        return;
-                    }
-
-                    const icon = {
-                        url: place.icon,
-                        size: new google.maps.Size(71, 71),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(25, 25),
-                    };
-
-                    markers.push(
-                        new google.maps.Marker({
-                            map,
-                            icon,
-                            title: place.name,
-                            position: place.geometry.location,
-                        }),
-                    );
-                    if (place.geometry.viewport) {
-
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                });
-                map.fitBounds(bounds);
-            });
-        }
-
-        window.initMap = initMap;
-    </script>
-
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNI_ZWPqvdS6r6gPVO50I4TlYkfkZdXh8&callback=initMap&libraries=places"
+        defer></script>
 </body>
 
 </html>
